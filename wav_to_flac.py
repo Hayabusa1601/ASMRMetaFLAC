@@ -4,7 +4,7 @@ from mutagen.flac import FLAC, Picture
 from PIL import Image
 
 # wavからflac
-def wav_to_flac(wav_path, album_artist_name, genre_name, artwork_filepath):
+def wav_to_flac(wav_path, artist_name, album_artist_name, genre_name, artwork_filepath):
 
   # === ファイルの前処理 ===
   # フォルダ名とファイル名に分割
@@ -36,7 +36,6 @@ def wav_to_flac(wav_path, album_artist_name, genre_name, artwork_filepath):
   print("filename:" + file_name)
   
   # メタデータの入力
-  artist_name = input("artist?:")
   track_num= input("tracknumer?: ")
 
   # メタデータの追加

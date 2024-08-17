@@ -15,6 +15,7 @@ def main():
 
 
   # メタデータの入力
+  artist_name = input("artist name?: ")
   album_artist_name = input("album artist name?:")
   genre_name = input("genre name?: ")
 
@@ -22,8 +23,9 @@ def main():
   # 処理
   for filename in os.listdir(wav_folder_path):
     if filename.lower().endswith('.wav'):
+      print("Converting...")
       input_file = os.path.join(wav_folder_path, filename)
-      output_file = wav_to_flac(input_file, album_artist_name, genre_name,artwork_filepath)
+      output_file = wav_to_flac(input_file,artist_name, album_artist_name, genre_name,artwork_filepath)
       print(f"{output_file}")
       print("Converted")
       
