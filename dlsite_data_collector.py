@@ -65,7 +65,14 @@ def download_artwork(url, file_path):
 
 def dlsite_data_collector():
   id = input("id? :")
-  artwork_filepath = "artworks/artwork.jpg"
+
+  # === 出力先の設定 === 
+  # Picturesフォルダ内の出力先のパスを取得
+  home_dir = os.path.expanduser("~")
+  output_folder = os.path.join(home_dir, "Pictures", "artworks")
+  # Picturesフォルダが存在しない場合は作成
+  os.makedirs(output_folder, exist_ok=True)
+  artwork_filepath = output_folder + "/artwork.jpg"
 
   title, artwork_url = fetch_dlsite_artwork_url(id)
   print("title: ", title)
