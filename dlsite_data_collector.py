@@ -63,7 +63,7 @@ def download_artwork(url, file_path):
     print(f"Failed to download: {url}")
 
 
-def main():
+def dlsite_data_collector():
   id = input("id? :")
   artwork_filepath = "artworks/artwork.jpg"
 
@@ -76,4 +76,4 @@ def main():
 
 
 if __name__ == "__main__":
-  main()
+  dlsite_data_collector()
