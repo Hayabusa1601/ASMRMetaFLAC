@@ -1,14 +1,19 @@
 import os, io
-
 from dlsite_data_collector import dlsite_data_collector
 from wav_to_flac import wav_to_flac
-
-
+import time
+import tkinter as tk
+import tkinter.filedialog
+#import tkinter
 
 def main():
+  # ルートウィンドウの非表示
   # 入力
   #wav_file = input("wavファイルの読み込み:")
-  wav_folder_path = input("folder path?:")
+  print("====asmr2flac====")
+  print("wavファイルが格納されているフォルダを選択してください。")
+  time.sleep(1)
+  wav_folder_path = tkinter.filedialog.askdirectory()
 
   # アートワークの入手
   artwork_filepath = dlsite_data_collector()
