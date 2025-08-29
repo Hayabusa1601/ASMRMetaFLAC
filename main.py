@@ -4,19 +4,43 @@ from wav_to_flac import wav_to_flac
 import time
 import tkinter as tk
 import tkinter.filedialog
-#import tkinter
+
+def btn_apply():
+  id = txt_id.get()
+  
+
 
 def main():
-  # ルートウィンドウの非表示
+  
   # 入力
   #wav_file = input("wavファイルの読み込み:")
-  print("====asmr2flac====")
+  print("====dlsite2flac====")
   print("wavファイルが格納されているフォルダを選択してください。")
   time.sleep(1)
   wav_folder_path = tkinter.filedialog.askdirectory()
 
+  # ウィンドウの表示
+  root = tk.Tk()
+  root.geometry("500x500")
+  # 画面タイトル　
+  root.title("dlsite2flac")
+  # idの入力
+  lbl_id = tk.Label(text="id (RJを含む)")
+  lbl_id.place(x=30, y=70)
+
+
+  txt_id = tkinter.Entry(width=20)
+  txt_id.place(x=150,y=70)
+
+  btn = tkinter.Button(root, text="apply", commant=btn_apply)
+  btn.place(x=140, y=170)
+
+  #表示
+  root.mainloop()
+
+
   # アートワークの入手
-  artwork_filepath = dlsite_data_collector()
+  artwork_filepath = dlsite_data_collector(txt_id.get)
 
 
   # メタデータの入力

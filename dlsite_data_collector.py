@@ -63,8 +63,8 @@ def download_artwork(url, file_path):
     print(f"Failed to download: {url}")
 
 
-def dlsite_data_collector():
-  id = input("id?(RJxxxxxxx) :")
+def dlsite_data_collector(id):
+  #id = input("id?(RJxxxxxxx) :")
 
   # === 出力先の設定 === 
   # Picturesフォルダ内の出力先のパスを取得
@@ -81,7 +81,3 @@ def dlsite_data_collector():
   download_artwork(artwork_url, artwork_filepath)
   return artwork_filepath
 
-
-
-if __name__ == "__main__":
-  dlsite_data_collector()
