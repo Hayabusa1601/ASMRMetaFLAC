@@ -41,7 +41,7 @@ def btn_apply(txt_id, txt_artist_name, txt_album_artist, txt_genre_name,root, wa
   #try:
   print("アートワークを取得中・・・")
   # アートワークの入手
-  artwork_filepath = dlsite_data_collector(id)
+  title, artwork_filepath = dlsite_data_collector(id)
   print(f"アートワークを保存しました。path:{artwork_filepath}")
 
   # ファイル返還処理
@@ -49,13 +49,19 @@ def btn_apply(txt_id, txt_artist_name, txt_album_artist, txt_genre_name,root, wa
   for filename in os.listdir(wav_folder_path):
     if filename.lower().endswith('.wav'):
       found_wav_files = True
+
       print(f"\n変換中...:{filename}")
+      # フォルダパスとファイル名から入力ファイルパスを取得
       input_file = os.path.join(wav_folder_path, filename)
-      output_file = wav_to_flac(input_file,artist_name, album_artist_name, genre_name,artwork_filepath)
+      # 入力ファイル、アーティスト名、アルバムアーティスト名、ジャンル名、アートワーク画像のパス、作品タイトル(アルバム名になる)
+      output_file = wav_to_flac(input_file,artist_name, album_artist_name, genre_name,artwork_filepath,title)
       print(f"\n返還完了: {output_file}")
 
   if not found_wav_files:
+    print("=================================================")
     print("指定されたフォルダにwavファイルが見つかりませんでした")
+    print("=================================================")
+
     
   print("\nすべての処理が終了しました")
   #except Exception as e:

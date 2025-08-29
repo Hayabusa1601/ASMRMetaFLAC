@@ -3,7 +3,7 @@ from pydub import AudioSegment # ffmpegが必要
 from mutagen.flac import FLAC, Picture
 from PIL import Image
 
-def wav_to_flac(wav_path, artist_name, album_artist_name, genre_name, artwork_filepath):
+def wav_to_flac(wav_path, artist_name, album_artist_name, genre_name, artwork_filepath,album_name):
   """
   wavからflacにしつつ受け取ったデータを元にメタデータを付与するプログラム
 
@@ -20,19 +20,17 @@ def wav_to_flac(wav_path, artist_name, album_artist_name, genre_name, artwork_fi
   artwork_filepath : String(パス文字列)
     アートワーク画像のパス文字列
   """
+
   # === ファイルの前処理 ===
   # フォルダ名とファイル名に分割
   input_folder, input_filename = os.path.split(wav_path) 
   # ファイル名と拡張子に分割 
   file_name, _ = os.path.splitext(input_filename)
 
-  # アルバム名の取得
-  album_name = os.path.basename(input_folder)
-
   # === 出力先の設定 === 
   # Musicフォルダ内の出力先のパスを取得
   home_dir = os.path.expanduser("~")
-  # アルバム名を取得してフォルダ名に設定
+  # アルバム名をフォルダ名に設定
   output_folder = os.path.join(home_dir, "Music", album_name)
 
   # Musicフォルダが存在しない場合は作成

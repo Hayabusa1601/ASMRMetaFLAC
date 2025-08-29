@@ -1,5 +1,5 @@
 import requests
-import os
+import os, re
 from bs4 import BeautifulSoup
 
 
@@ -103,10 +103,12 @@ def dlsite_data_collector(id):
 
   # fetch_dlsite_artwork_urlでアートワークの画像URLと作品タイトルを取得
   title, artwork_url = fetch_dlsite_artwork_url(id)
+  # 正規表現によって無駄な部分を除去
+  title = re.sub(r"【.*?】|\[.*?\]| \| DLsite 同人 - R1", "", title)
   print("title: ", title)
   print("srcset URL:", artwork_url)
 
   # 画像URLからアートワークのダウンロード
   download_artwork(artwork_url, artwork_filepath)
-  return artwork_filepath
+  return title, artwork_filepath
 
