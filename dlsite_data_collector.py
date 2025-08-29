@@ -53,6 +53,11 @@ def fetch_dlsite_artwork_url(product_id):
 def download_artwork(url, file_path):
   """
   画像URLから画像を取得する。
+
+  Parameters
+  ----------
+  url : 画像のURL
+  file_path : 保存先のファイルパス
   """
   response = requests.get(url)
   if response.status_code == 200:
@@ -63,21 +68,45 @@ def download_artwork(url, file_path):
     print(f"Failed to download: {url}")
 
 
+#def fetch_dlsite_metadata(product_id):
+#  """
+#  dlsiteの商品id(RJxxxxxxxx)を用いて、商品ページからアーティスト名や作品名などのメタデータを取得する。
+#
+#  Parameters
+#  ----------
+#  product_id : String
+#    対象のdlsite商品の商品id
+#  
+#  """
+
+
 def dlsite_data_collector(id):
+  """
+  dlsite_data_collector
+  アートワークを保存し、dlsiteのid名で保存する
+
+  Parameters
+  ----------
+  id: DLSiteの作品id (例：RJ123456)
+
+  """
   #id = input("id?(RJxxxxxxx) :")
 
   # === 出力先の設定 === 
   # Picturesフォルダ内の出力先のパスを取得
   home_dir = os.path.expanduser("~")
   output_folder = os.path.join(home_dir, "Pictures", "artworks")
+
   # Picturesフォルダが存在しない場合は作成
   os.makedirs(output_folder, exist_ok=True)
   artwork_filepath = output_folder + "/" + id +".jpg"
 
+  # fetch_dlsite_artwork_urlでアートワークの画像URLと作品タイトルを取得
   title, artwork_url = fetch_dlsite_artwork_url(id)
   print("title: ", title)
   print("srcset URL:", artwork_url)
 
+  # 画像URLからアートワークのダウンロード
   download_artwork(artwork_url, artwork_filepath)
   return artwork_filepath
 

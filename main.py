@@ -6,7 +6,24 @@ import tkinter as tk
 import tkinter.filedialog
 
 def btn_apply(txt_id, txt_artist_name, txt_album_artist, txt_genre_name,root, wav_folder_path):
-  
+  """
+  作品id入力後の、applyボタン押下後の処理
+
+  Parameters
+  ----------
+  txt_id : tkinterオブジェクト
+    dlsiteの作品id入力
+  txt_artist_name : tkinterオブジェクト
+    アーティスト名入力
+  txt_album_artist : tkinterオブジェクト
+    アルバムアーティスト名入力
+  txt_genre_name : tkinterオブジェクト
+    ジャンル名入力
+  root : tkinterオブジェクト
+    GUIウィンドウ
+  wav_folder_path : String 
+    wavフォルダのパス
+  """
   # tkinterオブジェクトからテキストを取得
   id = txt_id.get()
   artist_name = txt_artist_name.get()
@@ -48,16 +65,23 @@ def btn_apply(txt_id, txt_artist_name, txt_album_artist, txt_genre_name,root, wa
     
 
 def main():
+  """
+  DLSiteの作品に、作品idからアートワークとメタデータを入手するプログラムのメインプログラム
+  """
   
-  # 入力
+
   #wav_file = input("wavファイルの読み込み:")
   print("====dlsite2flac====")
+
+  # ===== 入力 =====
   print("wavファイルが格納されているフォルダを選択してください。")
   time.sleep(1)
 
   # ウィンドウの表示
   root = tk.Tk()
   root.withdraw()
+
+  # フォルダの選択
   wav_folder_path = tkinter.filedialog.askdirectory()
   if not wav_folder_path:
     print("フォルダが選択されませんでした")
@@ -78,7 +102,7 @@ def main():
   lbl_artist_name = tk.Label(text="アーティスト名")
   lbl_artist_name.place(x=30, y=100)
 
-  txt_artist_name = tkinter.Entry(width=20)
+  txt_artist_name = tkinter.Entry(width=20) 
   txt_artist_name.place(x=180, y=100)
 
   # アルバムアーティスト名の入力
