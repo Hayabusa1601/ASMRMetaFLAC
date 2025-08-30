@@ -68,16 +68,55 @@ def download_artwork(url, file_path):
     print(f"Failed to download: {url}")
 
 
-#def fetch_dlsite_metadata(product_id):
-#  """
-#  dlsiteの商品id(RJxxxxxxxx)を用いて、商品ページからアーティスト名や作品名などのメタデータを取得する。
-#
-#  Parameters
-#  ----------
-#  product_id : String
-#    対象のdlsite商品の商品id
-#  
-#  """
+
+
+def fetch_dlsite_metadata(product_id):
+  """
+  dlsiteの商品id(RJxxxxxxxx)を用いて、商品ページからアーティスト名や作品名などのメタデータを取得する。
+
+  Parameters
+  ----------
+  product_id : String
+    対象のdlsite商品の商品id
+  
+  """
+
+  # idからURLの生成
+  url = "https://www.dlsite.com/maniax/work/=/product_id/" + product_id + ".html"
+  
+  res = requests.get(url)
+  soup = BeautifulSoup(res.content, 'html.parser')
+
+
+  # === 声優名の取得 ===
+  # データを格納するための空の辞書を準備
+  work_data = {}
+
+  # idが'work_outline'のテーブル内にある全てのtrタグを取得
+  table = soup.find('table', id='work_outline')
+  for row in table.find_all('tr'):
+      # 各行からthとtdをそれぞれ取得
+      header = row.find('th')
+      data = row.find('td')
+
+      # thとtdの両方が存在する場合のみ処理
+      if header and data:
+          # thのテキストをキー、tdのテキストを値として辞書に格納
+          # .get_text('/')は複数の要素を'/'で区切って連結する
+          key = header.get_text(strip=True)
+          value = data.get_text('/', strip=True) # シナリオのように複数のaタグがある場合に対応
+          work_data[key] = value
+  
+  #print(work_data['声優'])
+  result = re.sub(r'/+', '/', work_data['声優'])
+  print(result)
+
+  # === サークル名の取得 ===
+  circle_name_maker = soup.find('span', class_='maker_name')
+
+  maker_name = circle_name_maker.find('a').get_text(strip=True)
+  print(maker_name)
+
 
 
 def dlsite_data_collector(id):
@@ -104,11 +143,14 @@ def dlsite_data_collector(id):
   # fetch_dlsite_artwork_urlでアートワークの画像URLと作品タイトルを取得
   title, artwork_url = fetch_dlsite_artwork_url(id)
   # 正規表現によって無駄な部分を除去
-  title = re.sub(r"【.*?】|\[.*?\]| \| DLsite 同人 - R1", "", title)
+  title = re.sub(r"【.*?】|\[.*?\]| \| DLsite 同人 - R18", "", title)
   print("title: ", title)
   print("srcset URL:", artwork_url)
 
   # 画像URLからアートワークのダウンロード
   download_artwork(artwork_url, artwork_filepath)
   return title, artwork_filepath
+
+if __name__ == "__main__":
+  fetch_dlsite_metadata("RJ387847")
 
