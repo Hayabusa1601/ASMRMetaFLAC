@@ -77,7 +77,7 @@ def main():
   
 
   #wav_file = input("wavファイルの読み込み:")
-  print("====dlsite2flac====")
+  print("====AsmrMetaFlac====")
 
   # ===== 入力 =====
   print("wavファイルが格納されているフォルダを選択してください。")
