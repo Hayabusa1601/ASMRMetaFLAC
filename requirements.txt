@@ -1,0 +1,6 @@
+# Requirements without specific versions
+requests
+beautifulsoup4
+mutagen
+Pillow
+pydub # need ffmpeg installed
