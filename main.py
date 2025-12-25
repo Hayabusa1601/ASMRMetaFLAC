@@ -1,5 +1,5 @@
 import os, io
-from dlsite_data_collector import dlsite_data_collector
+from dlsite_data_collector import dlsite_data_collector, fetch_dlsite_metadata
 from wav_to_flac import wav_to_flac
 import time
 import tkinter as tk
@@ -68,7 +68,26 @@ def btn_apply(txt_id, txt_artist_name, txt_album_artist, txt_genre_name,root, wa
   #  print(f"エラーが発生しました：{e}")
   #  tkinter.messagebox.showerror("エラー", f"処理中にエラーが発生しました：\n{e}")
 
+
+
+def btn_get_metadata(txt_id, txt_artist_name, txt_album_artist, txt_genre_name):
+    """
+    作品id(RJxxxxxx)から作品メタデータを取得して入力欄に反映
+    """
+    id = txt_id.get()
+    print(id)
+    voice_name, circle_name = fetch_dlsite_metadata(id)
     
+    txt_artist_name.delete(0, tkinter.END)
+    txt_artist_name.insert(0, voice_name)
+
+    txt_album_artist.delete(0, tkinter.END)
+    txt_album_artist.insert(0, circle_name)
+    
+    txt_genre_name.delete(0, tkinter.END)
+    txt_genre_name.insert(0, "asmr")
+    
+
 
 def main():
   """
@@ -77,7 +96,7 @@ def main():
   
 
   #wav_file = input("wavファイルの読み込み:")
-  print("====AsmrMetaFlac====")
+  print("====Asmr2MetaFlac====")
 
   # ===== 入力 =====
   print("wavファイルが格納されているフォルダを選択してください。")
@@ -94,7 +113,7 @@ def main():
     return
   
   root.deiconify()
-  root.geometry("400x300")
+  root.geometry("500x300")
   # 画面タイトル　
   root.title("dlsite2flac")
   # idの入力
@@ -125,11 +144,15 @@ def main():
   txt_genre_name = tkinter.Entry(width=20)
   txt_genre_name.place(x=180, y=160)
 
+  # メタデータ取得ボタン
+  btn_metadata = tkinter.Button(root, text="idから取得", command=lambda: btn_get_metadata(txt_id, txt_artist_name, txt_album_artist, txt_genre_name))
+  btn_metadata.place(x=350, y=70)
 
+  # applyボタン
   btn = tkinter.Button(root, 
                        text="apply", 
                        command=lambda: btn_apply(txt_id,txt_artist_name,txt_album_artist,txt_genre_name, root,wav_folder_path))
-  btn.place(x=140, y=200)
+  btn.place(x=240, y=200)
 
   #表示
   root.mainloop()

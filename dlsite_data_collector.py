@@ -109,13 +109,12 @@ def fetch_dlsite_metadata(product_id):
   
   #print(work_data['声優'])
   result = re.sub(r'/+', '/', work_data['声優'])
-  print(result)
 
   # === サークル名の取得 ===
   circle_name_maker = soup.find('span', class_='maker_name')
 
   maker_name = circle_name_maker.find('a').get_text(strip=True)
-  print(maker_name)
+  return result, maker_name
 
 
 
@@ -152,5 +151,5 @@ def dlsite_data_collector(id):
   return title, artwork_filepath
 
 if __name__ == "__main__":
-  fetch_dlsite_metadata("RJ387847")
-
+  voice_actor, circle_name = fetch_dlsite_metadata("RJ387847")
+  print(f"声優：{voice_actor}, サークル名:{circle_name}")
